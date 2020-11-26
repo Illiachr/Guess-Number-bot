@@ -12,13 +12,11 @@ function getRandomInt(max) {
 // Функция инициализации бота
 const init = (() => {
     const numSecret = getRandomInt(101), // Загадываем число
-        userAnswers = [], // Массив ответов игрока
         numTries = 10;
     let userAnswerIsRight = false, // Флаг правильного ответа
-        noTry = false; // Флаг "Нет попыток"
-    
-// Счетчик кол-ва ответов игрока
-    let i = 0;    
+        noTry = false, // Флаг "Нет попыток"
+        userAnswers = [], // Массив ответов игрока
+        i = 0; // Счетчик кол-ва ответов игрока
 
 // бот
     const botGame = (() => {
@@ -73,6 +71,8 @@ const init = (() => {
             if (confirm ('Давай сыграем ещё?')) {
                     userAnswerIsRight = false;
                     noTry = false;
+                    i = 0;
+                    userAnswers = [];
                     botGame(); //Играем снова
                 } else { // Если игрок нажад "Отмена"
                     alert('Хорошего дня! С нетерпением жду новых встреч!'); 
