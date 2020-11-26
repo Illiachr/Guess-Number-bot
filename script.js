@@ -14,7 +14,7 @@ const init = (() => {
 // Загадываем число
     const numSecret = getRandomInt(101);
 // Массив ответов игрока
-    const userAnswers = [];
+    let userAnswers = [];
 // Флаг правильно ответа TODO --> DELETE
     let userAnswerIsRight = false;
 // Счетчик кол-ва ответов игрока
@@ -28,12 +28,7 @@ const init = (() => {
 
             if (userAnswers[i] === numSecret) { 
                 alert ('Поздравляю! Ты угадал');
-                    if (confirm ('Давай сыграем ещё?')) {
-                        //i = 0;
-                        botGame(); //Играем снова
-                    } else { // Если игрок нажад "Отмена"
-                        alert('Хорошего дня! С нетерпением жду новых встреч!'); 
-                        } 
+                userAnswerIsRight = true;
             } else if (userAnswers[i] > numSecret) {
                 alert (` Не угадал мое число меньше, попробуй снова!
                 Твои ответы: ${userAnswers.join(' ')}`);
@@ -60,8 +55,19 @@ const init = (() => {
         notNum(); // Если нет просим ввести ответ снова
     } else { botQuestions(); } // Если да - новая попытка
 
-    botGame(); // Рекусивный вызов botGame()
-    // Если игрок нажад "Отмена"
+    if (!userAnswerIsRight){ // Если игра не окончена - рекусивный вызов botGame()
+        botGame();
+    } else { // Предлагаем сыграть еще раз
+            if (confirm ('Давай сыграем ещё?')) {
+                    userAnswerIsRight = false;
+                    i = 0;
+                    userAnswers = [];
+                    botGame(); //Играем снова
+                } else { // Если игрок нажад "Отмена"
+                    alert('Хорошего дня! С нетерпением жду новых встреч!'); 
+                    } 
+        }
+    // Если игрок нажал "Отмена"
     } else if (userAnswers[i] === null) { 
         alert ('Очень жаль, надеюсь, ты скоро вернешся :.('); 
         }
@@ -75,6 +81,7 @@ const init = (() => {
     console.log (numSecret);
     console.log (userAnswers);
     console.dir (botGame);
+    console.log (i);
 });
 
 init();
